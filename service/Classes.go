@@ -53,9 +53,9 @@ func (c ClassesService) CheckClassEnd() {
 			data1 := c.repo.SaveNotification(mentiNotification)
 			data2 := c.repo.SaveNotification(mentorNotification)
 			jsonNotification, _ := json.Marshal(data1)
-			sendToServer(string(jsonNotification), i.UserID)
-			jsonNotification, _ = json.Marshal(data2)
 			sendToServer(string(jsonNotification), i.MentiId)
+			jsonNotification, _ = json.Marshal(data2)
+			sendToServer(string(jsonNotification), i.UserID)
 		}
 	}
 }
