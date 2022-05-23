@@ -3,9 +3,9 @@ package service
 import (
 	"ClassChecker/models"
 	"ClassChecker/repository"
+	"bytes"
 	"encoding/json"
-	"fmt"
-	"strconv"
+	"net/http"
 )
 
 type ClassesService struct {
@@ -53,10 +53,24 @@ func (c ClassesService) CheckClassEnd() {
 			data1 := c.repo.SaveNotification(mentiNotification)
 			data2 := c.repo.SaveNotification(mentorNotification)
 			jsonNotification, _ := json.Marshal(data1)
-			fmt.Println(strconv.Itoa(int(i.UserID)))
-			SendNotification(string(jsonNotification), strconv.Itoa(int(i.UserID)))
+			sendToServer(string(jsonNotification), i.UserID)
 			jsonNotification, _ = json.Marshal(data2)
-			SendNotification(string(jsonNotification), strconv.Itoa(int(i.MentiId)))
+			sendToServer(string(jsonNotification), i.MentiId)
 		}
 	}
+}
+
+func sendToServer(data string, userId uint) {
+	type DataToServer struct {
+		Data   string
+		UserId uint
+	}
+	d := DataToServer{
+		Data:   data,
+		UserId: userId,
+	}
+	json_data, _ := json.Marshal(d)
+
+	http.Post("http://152.70.189.77/backend/notifications/", "application/json",
+		bytes.NewBuffer(json_data))
 }

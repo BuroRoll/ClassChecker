@@ -1,11 +1,13 @@
 package main
 
 import (
-	"ClassChecker/handlers"
 	"ClassChecker/repository"
 	"ClassChecker/service"
 	"fmt"
 	"github.com/robfig/cron/v3"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -26,9 +28,9 @@ func main() {
 
 	go scheduler.Start()
 
-	//sig := make(chan os.Signal, 1)
-	//signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-	//<-sig
-	handlerses := handlers.NewHandler(services)
-	handlerses.InitRoutes()
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	<-sig
+	//hxandlerses := handlers.NewHandler(services)
+	//handlerses.InitRoutes()
 }
