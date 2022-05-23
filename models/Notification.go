@@ -2,10 +2,11 @@ package models
 
 import "gorm.io/gorm"
 
-type Notification struct {
+type ClassNotification struct {
 	gorm.Model
-	Receiver uint
-	Type     string
-	Data     string
-	IsRead   bool
+	Receiver  uint
+	Type      string
+	Data      string
+	IsRead    bool
+	BookingId uint
 }

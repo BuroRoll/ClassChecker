@@ -61,7 +61,7 @@ func (c ClassesPostgres) SaveClass(times UserBooking) error {
 	return nil
 }
 
-func (c ClassesPostgres) SaveNotification(notification models.Notification) models.Notification {
+func (c ClassesPostgres) SaveNotification(notification models.ClassNotification) models.ClassNotification {
 	c.db.Create(&notification)
 	return notification
 }

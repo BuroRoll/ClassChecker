@@ -10,7 +10,7 @@ type Classes interface {
 	SaveClassesTimes(models.BookingTime) error
 	GetClassesWithTime() []UserBooking
 	SaveClass(times UserBooking) error
-	SaveNotification(notification models.Notification) models.Notification
+	SaveNotification(notification models.ClassNotification) models.ClassNotification
 }
 
 type Repository struct {

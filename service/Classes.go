@@ -40,15 +40,17 @@ func (c ClassesService) CheckClassEnd() {
 		if isEnd {
 			i.Status = "completed"
 			c.repo.SaveClass(i)
-			mentorNotification := models.Notification{
-				Receiver: i.UserID,
-				Type:     "class comleted",
-				Data:     i.ClassDataName,
+			mentorNotification := models.ClassNotification{
+				Receiver:  i.UserID,
+				Type:      "class comleted",
+				Data:      i.ClassDataName,
+				BookingId: i.ID,
 			}
-			mentiNotification := models.Notification{
-				Receiver: i.MentiId,
-				Type:     "class comleted",
-				Data:     i.ClassDataName,
+			mentiNotification := models.ClassNotification{
+				Receiver:  i.MentiId,
+				Type:      "class comleted",
+				Data:      i.ClassDataName,
+				BookingId: i.ID,
 			}
 			data1 := c.repo.SaveNotification(mentiNotification)
 			data2 := c.repo.SaveNotification(mentorNotification)
@@ -71,6 +73,7 @@ func sendToServer(data string, userId uint) {
 	}
 	json_data, _ := json.Marshal(d)
 
+	//http.Post("http://localhost:8000/notifications/class/", "application/json",
 	http.Post("http://152.70.189.77/backend/notifications/", "application/json",
 		bytes.NewBuffer(json_data))
 }
