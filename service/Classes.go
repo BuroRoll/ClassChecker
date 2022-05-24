@@ -28,6 +28,7 @@ func (c ClassesService) CheckClasses() {
 }
 
 type booking_data struct {
+	ClassName        string `json:"class_name"`
 	FirstName        string `json:"first_name"`
 	SecondName       string `json:"second_name"`
 	BookingId        uint   `json:"booking_id"`
@@ -48,13 +49,13 @@ func (c ClassesService) CheckClassEnd() {
 		if isEnd {
 			i.Status = "completed"
 			c.repo.SaveClass(i)
-			mentorData := CreateDataToSend(i.MentiFirstName, i.MentiSecondName, i.ID, i.UserID, i.MentiId)
+			mentorData := CreateDataToSend(i.MentiFirstName, i.MentiSecondName, i.ClassDataName, i.ID, i.UserID, i.MentiId)
 			mentorNotification := models.ClassNotification{
 				Receiver: i.UserID,
 				Type:     "class comleted",
 				Data:     mentorData,
 			}
-			mentiData := CreateDataToSend(i.MentorFirstName, i.MentorSecondName, i.ID, i.UserID, i.UserID)
+			mentiData := CreateDataToSend(i.MentorFirstName, i.MentorSecondName, i.ClassDataName, i.ID, i.UserID, i.UserID)
 			mentiNotification := models.ClassNotification{
 				Receiver: i.MentiId,
 				Type:     "class comleted",
@@ -86,8 +87,9 @@ func sendToServer(data string, userId uint) {
 		bytes.NewBuffer(json_data))
 }
 
-func CreateDataToSend(firstName string, secondName string, bookingId uint, mentorId uint, commentRecipient uint) string {
+func CreateDataToSend(firstName string, secondName string, className string, bookingId uint, mentorId uint, commentRecipient uint) string {
 	data := booking_data{
+		ClassName:        className,
 		FirstName:        firstName,
 		SecondName:       secondName,
 		BookingId:        bookingId,
