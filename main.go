@@ -25,12 +25,11 @@ func main() {
 	scheduler.AddFunc("*/1 * * * *", services.CheckClassEnd)
 	scheduler.AddFunc("*/1 * * * *", services.CheckClasses)
 	//scheduler.AddFunc("0 */3 * * *", services.CheckClasses)
+	//scheduler.AddFunc("0 */3 * * *", services.CheckClassEnd)
 
 	go scheduler.Start()
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
-	//hxandlerses := handlers.NewHandler(services)
-	//handlerses.InitRoutes()
 }

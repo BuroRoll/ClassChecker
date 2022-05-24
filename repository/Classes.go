@@ -29,12 +29,16 @@ func (c ClassesPostgres) SaveClassesTimes(times models.BookingTime) error {
 }
 
 type UserBooking struct {
-	ID            uint
-	UserID        uint
-	ClassID       uint
-	Status        string
-	MentiId       uint
-	ClassDataName string `json:"class_data_name"`
+	ID               uint
+	UserID           uint
+	ClassID          uint
+	Status           string
+	MentiId          uint
+	ClassDataName    string `json:"class_data_name"`
+	MentiFirstName   string `json:"menti_first_name"`
+	MentiSecondName  string `json:"menti_second_name"`
+	MentorFirstName  string `json:"mentor_first_name"`
+	MentorSecondName string `json:"mentor_second_name"`
 
 	Time []models.BookingTime `gorm:"foreignKey:BookingClassID;references:ID"`
 }
@@ -46,6 +50,8 @@ func (c ClassesPostgres) GetClassesWithTime() []UserBooking {
 		Select("*").
 		Preload("Time").
 		Joins("LEFT JOIN (SELECT id AS class_data_id, class_name AS class_data_name FROM classes) AS class_data ON class_data_id = class_id").
+		Joins("LEFT JOIN (SELECT id as menti_data_id, first_name AS menti_first_name, second_name AS menti_second_name FROM users) AS menti_data ON menti_data_id = menti_id").
+		Joins("LEFT JOIN (SELECT id AS mentor_data_id, first_name AS mentor_first_name, second_name AS mentor_second_name FROM users) AS mentor_data ON mentor_data_id = user_classes.user_id").
 		Where("status = ?", "planned").
 		Find(&bookings)
 	return bookings

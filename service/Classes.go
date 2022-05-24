@@ -27,6 +27,14 @@ func (c ClassesService) CheckClasses() {
 	}
 }
 
+type booking_data struct {
+	FirstName        string `json:"first_name"`
+	SecondName       string `json:"second_name"`
+	BookingId        uint   `json:"booking_id"`
+	MentorId         uint   `json:"mentor_id"`
+	CommentRecipient uint   `json:"comment_recipient"`
+}
+
 func (c ClassesService) CheckClassEnd() {
 	classesTimes := c.repo.GetClassesWithTime()
 	for _, i := range classesTimes {
@@ -40,17 +48,17 @@ func (c ClassesService) CheckClassEnd() {
 		if isEnd {
 			i.Status = "completed"
 			c.repo.SaveClass(i)
+			mentorData := CreateDataToSend(i.MentiFirstName, i.MentiSecondName, i.ID, i.UserID, i.MentiId)
 			mentorNotification := models.ClassNotification{
-				Receiver:  i.UserID,
-				Type:      "class comleted",
-				Data:      i.ClassDataName,
-				BookingId: i.ID,
+				Receiver: i.UserID,
+				Type:     "class comleted",
+				Data:     mentorData,
 			}
+			mentiData := CreateDataToSend(i.MentorFirstName, i.MentorSecondName, i.ID, i.UserID, i.UserID)
 			mentiNotification := models.ClassNotification{
-				Receiver:  i.MentiId,
-				Type:      "class comleted",
-				Data:      i.ClassDataName,
-				BookingId: i.ID,
+				Receiver: i.MentiId,
+				Type:     "class comleted",
+				Data:     mentiData,
 			}
 			data1 := c.repo.SaveNotification(mentiNotification)
 			data2 := c.repo.SaveNotification(mentorNotification)
@@ -76,4 +84,16 @@ func sendToServer(data string, userId uint) {
 	//http.Post("http://localhost:8000/notifications/class/", "application/json",
 	http.Post("http://152.70.189.77/backend/notifications/class", "application/json",
 		bytes.NewBuffer(json_data))
+}
+
+func CreateDataToSend(firstName string, secondName string, bookingId uint, mentorId uint, commentRecipient uint) string {
+	data := booking_data{
+		FirstName:        firstName,
+		SecondName:       secondName,
+		BookingId:        bookingId,
+		MentorId:         mentorId,
+		CommentRecipient: commentRecipient,
+	}
+	jsonData, _ := json.Marshal(data)
+	return string(jsonData)
 }
