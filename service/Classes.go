@@ -5,6 +5,7 @@ import (
 	"ClassChecker/repository"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -97,5 +98,6 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 		CommentRecipient: commentRecipient,
 	}
 	jsonData, _ := json.Marshal(data)
+	fmt.Println(string(jsonData))
 	return string(jsonData)
 }
