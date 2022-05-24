@@ -29,7 +29,7 @@ func (c ClassesService) CheckClasses() {
 }
 
 type booking_data struct {
-	ClassName        string `json:"class_name"`
+	ClassDataName    string `json:"class_data_name"`
 	FirstName        string `json:"first_name"`
 	SecondName       string `json:"second_name"`
 	BookingId        uint   `json:"booking_id"`
@@ -73,6 +73,7 @@ func (c ClassesService) CheckClassEnd() {
 }
 
 func sendToServer(data string, userId uint) {
+	fmt.Println(data)
 	type DataToServer struct {
 		Data   string
 		UserId uint
@@ -90,7 +91,7 @@ func sendToServer(data string, userId uint) {
 
 func CreateDataToSend(firstName string, secondName string, className string, bookingId uint, mentorId uint, commentRecipient uint) string {
 	data := booking_data{
-		ClassName:        className,
+		ClassDataName:    className,
 		FirstName:        firstName,
 		SecondName:       secondName,
 		BookingId:        bookingId,
@@ -98,6 +99,5 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 		CommentRecipient: commentRecipient,
 	}
 	jsonData, _ := json.Marshal(data)
-	fmt.Println(string(jsonData))
 	return string(jsonData)
 }
