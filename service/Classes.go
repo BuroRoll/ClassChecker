@@ -47,7 +47,7 @@ func (c ClassesService) CheckClasses() {
 }
 
 type booking_data struct {
-	ClassDataName    string `json:"class_data_name"`
+	ClassName        string `json:"class_name"`
 	FirstName        string `json:"first_name"`
 	SecondName       string `json:"second_name"`
 	BookingId        uint   `json:"booking_id"`
@@ -112,7 +112,7 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 	var data booking_data
 	if time == "" {
 		data = booking_data{
-			ClassDataName:    className,
+			ClassName:        className,
 			FirstName:        firstName,
 			SecondName:       secondName,
 			BookingId:        bookingId,
@@ -122,7 +122,7 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 		}
 	} else {
 		data = booking_data{
-			ClassDataName:    className,
+			ClassName:        className,
 			FirstName:        firstName,
 			SecondName:       secondName,
 			BookingId:        bookingId,
