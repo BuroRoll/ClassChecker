@@ -6,6 +6,7 @@ import (
 )
 
 type Classes interface {
+	GetClassData(classId uint) UserBooking
 	GetClassesTimes() []models.BookingTime
 	SaveClassesTimes(models.BookingTime) error
 	GetClassesWithTime() []UserBooking
