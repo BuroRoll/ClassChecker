@@ -73,13 +73,13 @@ func (c ClassesService) CheckClassEnd() {
 			mentorData := CreateDataToSend(i.MentiFirstName, i.MentiSecondName, i.ClassDataName, i.ID, i.UserID, i.MentiId, "", i.LessonCount)
 			mentorNotification := models.ClassNotification{
 				Receiver: i.UserID,
-				Type:     "class comleted",
+				Type:     "class completed",
 				Data:     mentorData,
 			}
 			mentiData := CreateDataToSend(i.MentorFirstName, i.MentorSecondName, i.ClassDataName, i.ID, i.UserID, i.UserID, "", i.LessonCount)
 			mentiNotification := models.ClassNotification{
 				Receiver: i.MentiId,
-				Type:     "class comleted",
+				Type:     "class completed",
 				Data:     mentiData,
 			}
 			data1 := c.repo.SaveNotification(mentiNotification)
