@@ -31,7 +31,7 @@ func (c ClassesService) CheckClasses() {
 			Type:     "lesson complete",
 			Data:     mentorData,
 		}
-		mentiData := CreateDataToSend(classData.MentorFirstName, classData.MentorSecondName, classData.ClassDataName, classData.ID, classData.UserID, classData.MentiId, j.Time, 0)
+		mentiData := CreateDataToSend(classData.MentorFirstName, classData.MentorSecondName, classData.ClassDataName, classData.ID, classData.UserID, classData.UserID, j.Time, 0)
 		mentiNotification := models.ClassNotification{
 			Receiver: classData.MentiId,
 			Type:     "lesson complete",
