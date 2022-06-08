@@ -17,7 +17,6 @@ func (c ClassesPostgres) GetClassesTimes() []models.BookingTime {
 	var bookings []models.BookingTime
 	c.db.
 		Where("to_timestamp(CONCAT( substr(time, 1, length(time) - 2), ' ', (substr(time, length(time), length(time))::INTEGER * time '03:00')), 'YYYY/MM/DD HH24:MI:SS') < NOW() AND is_end=false").
-		//Where("is_end = ?", false).
 		Find(&bookings)
 	return bookings
 }

@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"os"
 )
 
 type ClassesService struct {
@@ -103,8 +104,7 @@ func sendToServer(data string, userId uint) {
 	}
 	json_data, _ := json.Marshal(d)
 
-	//http.Post("http://localhost:8000/notifications/class/", "application/json",
-	http.Post("http://152.70.189.77/backend/notifications/class", "application/json",
+	http.Post(os.Getenv("DB_HOST")+"/notifications/class", "application/json",
 		bytes.NewBuffer(json_data))
 }
 
