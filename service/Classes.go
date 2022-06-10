@@ -56,6 +56,7 @@ type booking_data struct {
 	CommentRecipient uint   `json:"comment_recipient"`
 	Time             string `json:"time"`
 	LessonCount      uint   `json:"lesson_count"`
+	ChatUserId       uint   `json:"chat_user_id"`
 }
 
 func (c ClassesService) CheckClassEnd() {
@@ -119,6 +120,7 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 			MentorId:         mentorId,
 			CommentRecipient: commentRecipient,
 			LessonCount:      lessonCount,
+			ChatUserId:       commentRecipient,
 		}
 	} else {
 		data = booking_data{
@@ -129,6 +131,7 @@ func CreateDataToSend(firstName string, secondName string, className string, boo
 			MentorId:         mentorId,
 			CommentRecipient: commentRecipient,
 			Time:             time,
+			ChatUserId:       commentRecipient,
 		}
 	}
 
