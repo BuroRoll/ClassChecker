@@ -105,7 +105,8 @@ func sendToServer(data string, userId uint) {
 	}
 	json_data, _ := json.Marshal(d)
 
-	http.Post(os.Getenv("DB_HOST")+"/notifications/class", "application/json",
+	//http.Post(os.Getenv("DB_HOST")+"/notifications/class", "application/json",
+	http.Post(os.Getenv("SERVER")+"/notifications/class", "application/json",
 		bytes.NewBuffer(json_data))
 }
 
