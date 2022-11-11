@@ -1,16 +1,13 @@
-
-FROM golang:1.18-alpine AS build
+FROM golang:1.18-alpine
 
 WORKDIR /app
 
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo main.go
 
-FROM scratch
+COPY ./ ./
 
-WORKDIR /app
+RUN go build main.go
 
-COPY --from=build /app/main ./main
-ENTRYPOINT ["./main"]
+CMD [ "./main" ]
