@@ -5,6 +5,7 @@ import (
 	"ClassChecker/repository"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -21,6 +22,7 @@ func (c ClassesService) CheckClasses() {
 	classesTimes := c.repo.GetClassesTimes()
 	for _, j := range classesTimes {
 		j.IsEnd = true
+		j.IsSuccess = true
 		err := c.repo.SaveClassesTimes(j)
 		classData := c.repo.GetClassData(j.BookingClassID)
 		if err != nil {
@@ -105,9 +107,11 @@ func sendToServer(data string, userId uint) {
 	}
 	json_data, _ := json.Marshal(d)
 
-	//http.Post(os.Getenv("DB_HOST")+"/notifications/class", "application/json",
-	http.Post(os.Getenv("SERVER")+"/notifications/class", "application/json",
+	_, err := http.Post(os.Getenv("SERVER")+"/notifications/class", "application/json",
 		bytes.NewBuffer(json_data))
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func CreateDataToSend(firstName string, secondName string, className string, bookingId uint, mentorId uint, commentRecipient uint, time string, lessonCount uint) string {

@@ -7,4 +7,5 @@ type BookingTime struct {
 	BookingClassID uint
 	Time           string
 	IsEnd          bool
+	IsSuccess      bool
 }

@@ -22,7 +22,9 @@ func (c ClassesPostgres) GetClassesTimes() []models.BookingTime {
 }
 
 func (c ClassesPostgres) SaveClassesTimes(times models.BookingTime) error {
-	result := c.db.Model(&times).Where("id = ?", times.ID).Update("is_end", true)
+	result := c.db.Model(&times).
+		Where("id = ?", times.ID).
+		Updates(models.BookingTime{IsEnd: true, IsSuccess: true})
 	if result.Error != nil {
 		return result.Error
 	}
