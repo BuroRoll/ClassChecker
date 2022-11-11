@@ -6,7 +6,7 @@ WORKDIR /app
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo /main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo main.go
 
 FROM scratch
 
